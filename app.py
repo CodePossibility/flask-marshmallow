@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify
 from flask_marshmallow import Marshmallow
 from marshmallow import Schema, fields, validate, validates, validates_schema, ValidationError
+import copy
 
 
 app = Flask(__name__)
@@ -57,10 +58,9 @@ def project():
         # load will do both validation and loading
         project_request_dict = AddProjectRequestSchema().load(request.json)
 
-        project_response_dict = dict()
-        project_response_dict['Name'] = project_request_dict['Name']
+        project_response_dict = copy.deepcopy(project_request_dict)
 
-        return project_request_dict
+        return project_response_dict
 
 
 if __name__ == '__main__':
